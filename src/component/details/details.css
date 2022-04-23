@@ -1,0 +1,107 @@
+.details_page {
+  background-color: #000;
+  min-height: 100vh;
+}
+.details_container {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+  /* align-items: center; */
+}
+
+.image_container {
+  width: 30%;
+}
+.image_container img {
+  width: 100%;
+  height: 400px;
+}
+.movie_details_container {
+  width: 30%;
+}
+.movie_details_title {
+  display: flex;
+  justify-content: space-between;
+}
+.star-emoji {
+  margin-left: 8px;
+}
+
+.css-1aquho2-MuiTabs-indicator {
+  background-color: #df1b1c !important;
+}
+
+.css-1t9sq75-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: #fff !important;
+}
+
+.css-13xfq8m-MuiTabPanel-root {
+  padding: 0 !important;
+}
+.description {
+  margin-top: 20px;
+}
+.additional_detaills {
+  display: flex;
+  justify-content: space-between;
+}
+.extra_details {
+  margin-top: 40px;
+}
+.additional_detaills {
+  margin-top: 20px;
+}
+.trailer_section {
+  margin-top: 20px;
+}
+.Reviewr_rating {
+  margin-top: 5px;
+  display: flex;
+}
+.reviewr {
+  display: flex;
+  justify-content: space-between;
+}
+.review_container {
+  margin-top: 20px;
+}
+.review {
+  margin-top: 20px;
+}
+.review_input {
+  margin-top: 20px;
+}
+/* .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input {
+  border-color: red !important;
+}
+.css-1exn6sj-MuiFormControl-root-MuiTextField-root {
+  background-color: #fff !important;
+}
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  background-color: #fff !important;
+}
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  color: #626262 !important;
+  font-weight: 900;
+
+  font-size: 24px !important;
+  font-family: "lato";
+} */
+.submit_review {
+  margin-top: 10px;
+}
+.submit_review button {
+  border: none;
+  outline: none;
+  padding: 10px 20px 10px 20px;
+  background-color: #ffff33;
+  color: #000;
+  font-weight: 900;
+  font-family: "lato";
+  font-size: 14px;
+  border-radius: 5px;
+}
+.submit_review button:hover {
+  cursor: pointer;
+  background-color: #e5e5e5;
+}

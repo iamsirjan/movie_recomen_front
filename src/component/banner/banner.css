@@ -1,0 +1,12 @@
+.banner_container {
+  width: 100%;
+}
+
+.banner_image {
+  height: 450px;
+}
+.banner_image img {
+  height: 100%;
+  cursor: pointer;
+  width: 100%;
+}

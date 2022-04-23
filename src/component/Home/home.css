@@ -1,0 +1,19 @@
+.home_container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+.sidebar {
+  display: flex;
+  flex: 0.025;
+  background-color: #000;
+}
+.search_icon {
+  display: flex;
+  cursor: pointer;
+
+  justify-content: center;
+}
+.movie_container {
+  flex: 0.975;
+}

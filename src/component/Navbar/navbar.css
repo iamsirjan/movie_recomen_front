@@ -1,0 +1,46 @@
+.navbar_component {
+  background-color: black;
+  display: flex;
+  height: 60px;
+  width: auto;
+  padding-left: 40px;
+  align-items: center;
+}
+.navbar_menu_bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0px 40px 0px 40px;
+}
+
+.navbar_logo span {
+  color: #4ab900;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.navbar_menu span {
+  color: #fff;
+  cursor: pointer;
+}
+
+.navbar_user {
+  display: flex;
+  align-items: center;
+}
+.navbar_user img {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin-right: 20px;
+
+  border-radius: 100%;
+}
+.navbar_user span {
+  color: #fff;
+  cursor: pointer;
+}
+.login_user {
+  margin-right: 20px;
+}
