@@ -1,8 +1,8 @@
 import './movie.css'
 import {useEffect, useState} from 'react'
-
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css"
+import Carousel from 'react-elastic-carousel';
+// import Carousel from "react-multi-carousel";
+// import "react-multi-carousel/lib/styles.css"
 import { Link } from 'react-router-dom';
 import {useDispatch,useSelector} from 'react-redux';
 import movieActions from '../admin/redux/actions'
@@ -17,25 +17,12 @@ const Movie = () => {
 
    
    
-    const responsive = {
-        desktop: {
-          breakpoint: { max: 3000, min: 1024 },
-          items: 4,
-          slidesToSlide: 4, // optional, default to 1.
-         
-        },
-        tablet: {
-          breakpoint: { max: 1024, min: 464 },
-          items: 4,
-          slidesToSlide: 2 // optional, default to 1.
-        },
-        mobile: {
-          breakpoint: { max: 464, min: 0 },
-          items: 1,
-          slidesToSlide: 1 // optional, default to 1.
-        }
-      };
-
+    const breakPoints = [
+        { width: 1, itemsToShow: 1 },
+        { width: 550, itemsToShow: 2, itemsToScroll: 2 },
+        { width: 768, itemsToShow: 3 },
+        { width: 1200, itemsToShow: 4 }
+      ];
       
     return (
     <>
@@ -43,9 +30,9 @@ const Movie = () => {
            <span>All Movie</span>
           <div className="movie_list">
     
-           
-            {movieList?.slice(0,4).map((data,i) => (
-             
+          <Carousel breakPoints={breakPoints}> 
+            {movieList?.map((data,i) => (
+          
          <Link className="link" to={`/movie-details/${data.name}/${data.movie_id}`}>
             <div key={i}  className="movie_box">
                 <div className="movie_image">
@@ -67,9 +54,10 @@ const Movie = () => {
                 </div>
             </div>
             </Link>
-           
+            
             ))}
            
+           </Carousel>
            
         
             
@@ -85,6 +73,7 @@ const Movie = () => {
 
         }
           <div className="movie_list">
+          <Carousel breakPoints={breakPoints}> 
     
            
             {movieList?.filter((data)  => data.language == 1).map((data,i) => (
@@ -117,7 +106,7 @@ const Movie = () => {
            
              ))}
            
-           
+           </Carousel>
         
             
         
@@ -128,6 +117,7 @@ const Movie = () => {
         <div className="movie_container_box">
              <span>Hindi</span>
           <div className="movie_list">
+          <Carousel breakPoints={breakPoints}> 
     
            
             {movieList?.filter((data)  => data.language == 3).map((data,i) => (
@@ -158,8 +148,9 @@ const Movie = () => {
            :
            null
            
+          
              ))}
-           
+            </Carousel>
            
         
             
@@ -171,6 +162,7 @@ const Movie = () => {
         <div className="movie_container_box">
            <span>Nepali</span>
           <div className="movie_list">
+          <Carousel breakPoints={breakPoints}> 
     
            
             {movieList?.filter((data)  => data.language == 2).map((data,i) => (
@@ -201,7 +193,7 @@ const Movie = () => {
            
            
              ))}
-           
+           </Carousel>
            
         
             
@@ -213,6 +205,7 @@ const Movie = () => {
         <div className="movie_container_box">
            <span>Recommend For you</span>
           <div className="movie_list">
+          <Carousel breakPoints={breakPoints}> 
     
            
             {movieList?.filter((data)=> RecommendList.includes(data.movie_id)).map((data,i) => (
@@ -244,7 +237,7 @@ const Movie = () => {
              ))}
            
            
-        
+        </Carousel>
             
         
             </div> 
