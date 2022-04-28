@@ -30,6 +30,7 @@ function* getAccessTokenReq(token, username, password) {
       type: actions.GET_CURRENT_USER_SUC,
       currentUser: currentUser.data,
     });
+    
   } catch (error) {
     yield put({
       type: actions.GET_ACCESS_FAIL,
@@ -52,24 +53,11 @@ function* getTokenReq(action) {
     delay(1000);
     toast.success('logged in succesfully');
   } catch (error) {
+   
     
-      if (error && error?.response?.data) {
-        yield put({
-          type: actions.GET_TOKEN_FAIL,
-          statusCode: error.response.data.status,
-          message: error.response.data.error.statusText,
-        });
-        
-      }
+   
+ 
     
-    if (error?.response?.data) {
-     
-      return yield put({
-        type: actions.GET_TOKEN_FAIL,
-        statusCode: error.response.data.error.statusCode,
-        message: error.response.data.error.name,
-      });
-    }
     yield put({
       type: actions.GET_TOKEN_FAIL,
       statusCode: error.status,
@@ -87,6 +75,7 @@ function* fetchCurrentUserReq(action) {
     });
   } catch (error) {
     if (error?.response?.data) {
+      
       yield put({
         type: actions.GET_CURRENT_USER_FAIL,
         message: 'something went wrong.',
@@ -104,6 +93,8 @@ function* logoutReq(action) {
     yield put({
       type: actions.LOGOUT_SUC,
     });
+    delay(1000);
+    toast.success('logged out succesfully');
   } catch (error) {
     const message = `Network Error, Can't connect to server.`;
     const status = error?.response?.data?.error?.message || 502;

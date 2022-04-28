@@ -12,7 +12,7 @@ import "video-react/dist/video-react.css";
 import { Player } from 'video-react';
 import ReactPlayer from 'react-player'
 import BeautyStars from 'beauty-stars';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import movieActions from '../admin/redux/actions'
 import { useDispatch, useSelector } from 'react-redux';
 import userActions from '../register/redux/actions'
@@ -28,23 +28,32 @@ const Details = () => {
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
-    const {id} = useParams()
+    const {id,name} = useParams()
+ 
+    const currentUser = useSelector((state) => state?.auth?.currentUser?.user?.user_id);
+
+ 
+    const movie = {
+        moviename:name
+    }
+    
     React.useEffect(() => {
-   dispatch(movieActions.getdetails())
-   dispatch(movieActions.getGenreDetails())
-   dispatch(userActions.getdetails())
-   dispatch(movieActions.getRatingDetails())
-   dispatch(loginactions.getCurrentUser())
-
-
-
-
-    },[])
-   
+        dispatch(movieActions.getdetails())
+        dispatch(movieActions.getGenreDetails())
+        dispatch(userActions.getdetails())
+        dispatch(movieActions.getRatingDetails())
+        dispatch(loginactions.getCurrentUser())
+        dispatch(movieActions.getUserRecommendDetails(movie))
+     
+     
+     
+         },[name])
     const movieList = useSelector((state) => state.moviedetails.Details)
     const GenreList = useSelector((state) => state.moviedetails.Genre)
     const LanguageList = useSelector((state) => state.moviedetails.Language)
     const RatingList = useSelector((state) => state.moviedetails.Rating)
+    const MovieRecommendedList = useSelector((state) => state.moviedetails.UserRecommend)
+  
     const userList = useSelector((state) => state.register.user)
     
 
@@ -53,9 +62,9 @@ const handleSubmit = () => {
         rating:rating,
         comment,
         movie:id,
-        user:2
+        user:currentUser,
     }
-    console.log(data)
+    
     dispatch(actions.sendRatingDetails(data))
 }
 
@@ -126,7 +135,7 @@ const handleSubmit = () => {
              </TabPanel>
                  <TabPanel value="3">
                      <div className="review_container">
-                         {RatingList.map((data) => (
+                         {RatingList.filter((rating) => rating.movie == data.movie_id).map((data) => (
                              
                          <div className="review">
                              <div className="reviewr">
@@ -179,7 +188,53 @@ const handleSubmit = () => {
 
             </div>
         </div>
+
         ))}
+        <div className="user_recomended">
+
+        <div className="more_movies">
+         <Box mt={5} className="movie_container_box">
+        <Typography sx={{mb:2,mt:2,color:"#fff",fontWeight:600,fontSize:'32px'}}> More Like This </Typography>
+          <div className="movie_list">
+    
+           
+          {movieList.filter((data)=> MovieRecommendedList.includes(data.name)).map((data,i) => (
+           
+            <Link className="link" to={`/movie-details/${data.name}/${data.movie_id}`}>
+            <div key={i}  className="movie_box">
+                <div className="movie_image">
+                    <img src={data.image} alt="movie_image" />
+                </div>
+                <div className="movie_des">
+                    <div className="movie_details">
+                    <div className="movie_name">
+                        <span>{data.name}</span>
+                    </div>
+                    {GenreList.filter((genre) => genre.genre_id == data.genre).map((data) => (
+
+                    <div className="movie_genre">
+                        <span>{data.genre}</span>
+                    </div>
+                    ))}
+
+                    </div>
+                </div>
+            </div>
+            </Link>
+            
+           
+           
+            ))}
+           
+           
+        
+            
+        
+            </div> 
+        </Box>
+        </div>
+        <div className="space"></div>
+        </div>
         </div>
     </>
     )

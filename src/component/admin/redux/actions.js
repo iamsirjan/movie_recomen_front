@@ -38,6 +38,10 @@ const actions = {
   GET_RECOMMEND_SUC: `${entities} GET_RECOMMEND_SUC`,
   GET_RECOMMEND_FAIL: `${entities} GET_RECOMMEND_FAIL`,
 
+  GET_USERRECOMMEND_REQ: `${entities} GET_USERRECOMMEND_REQ`,
+  GET_USERRECOMMEND_SUC: `${entities} GET_USERRECOMMEND_SUC`,
+  GET_USERRECOMMEND_FAIL: `${entities} GET_USERRECOMMEND_FAIL`,
+
   adddetails: (payload) => ({
     type: actions.SEND_DETAILS_REQ,
     payload,
@@ -51,6 +55,10 @@ const actions = {
   }),
   getRecommendDetails:(payload) => ({
     type:actions.GET_RECOMMEND_REQ,
+    payload,
+  }),
+  getUserRecommendDetails:(payload) => ({
+    type:actions.GET_USERRECOMMEND_REQ,
     payload,
   }),
   sendRatingDetails:(payload) => ({

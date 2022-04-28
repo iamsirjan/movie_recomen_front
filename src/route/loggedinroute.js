@@ -6,7 +6,7 @@ const MovieDetails = React.lazy(() => import("../component/details"))
 
 export const loggedinroutes = [
 
-  { path: "/movie-details/:id", Component: MovieDetails, title: "Movie Details" },
-
+  { path: "/movie-details/:name/:id", Component: MovieDetails, title: "Movie Details" },
+  
   
 ];

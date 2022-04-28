@@ -20,3 +20,34 @@
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   transition: 0.3s;
 }
+.dashboard_info {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.edit-movie-details {
+  margin-top: 20px;
+}
+
+.action_button {
+  display: flex;
+  justify-content: space-between;
+}
+.edit_button {
+  border: none;
+  outline: none;
+  padding: 10px 30px 10px 30px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete_button {
+  border: none;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #ba3720;
+  color: #fff;
+  outline: none;
+  padding: 10px 30px 10px 30px;
+}

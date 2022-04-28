@@ -3,7 +3,9 @@ import {
   postDetailsApi,
   getDetailsApi,
   getRecommendApi,
- 
+  getUserRecommendApi,
+  editDetailsApi,
+  deleteDetailsApi
   
 } from '../../../api/moviedetails';
 
@@ -92,7 +94,29 @@ function* callGetRecommendReq(action) {
     });
   }
 }
-
+function* callGetUserRecommendReq(action) {
+  try {
+    let apiResponse = yield call(getUserRecommendApi, action.payload);
+    let { data, status } = apiResponse;
+    
+    yield put({
+      type: actions.GET_USERRECOMMEND_SUC,
+      statusCode: status,
+      details: data,
+    });
+  } catch (err) {
+    if (err && err?.response) {
+      yield put({
+        type: actions.GET_USERRECOMMEND_FAIL,
+        payload: err.response.message,
+      });
+    }
+    yield put({
+      type: actions.GET_USERRECOMMEND_FAIL,
+      payload: err.message,
+    });
+  }
+}
 function* callGetRatingReq(action) {
   try {
     let apiResponse = yield call(getRatingApi, action.payload);
@@ -174,7 +198,7 @@ function* callGetLanguageDetailsReq(action) {
   try {
     let apiResponse = yield call(getLanguageApi, action.payload);
     let { data, status } = apiResponse;
-    const message = 'details fetched successfully';
+  
     yield put({
       type: actions.GET_LANGUAGE_SUC,
       statusCode: status,
@@ -195,70 +219,64 @@ function* callGetLanguageDetailsReq(action) {
 }
 
 
-// function* callDeleteDetailsReq(action) {
-//   try {
-//     let apiResponse = yield call(deleteDetailsApi, action.payload);
-//     let { status } = apiResponse;
-//     const message = 'banner deleted successfully';
-//     yield put({
-//       type: actions.DLT_DETAILS_SUC,
-//       statusCode: status,
-//       id: action.payload,
-//       message,
-//     });
-//     const newDetailsList = yield call(getBannerApi);
-//     yield put({
-//       type: actions.GET_ADMINDETAILS_SUC,
-//       Details: newDetailsList.data,
-//     });
-//     delay(1000);
-//     yield ShowMessage(status, message);
-//   } catch (err) {
-//     if (err && err?.response) {
-//       yield put({
-//         type: actions.GET_DETAILS_FAIL,
-//         payload: err.response.message,
-//       });
-//     }
-//     yield put({
-//       type: actions.DLT_DETAILS_FAIL,
-//       payload: err.message,
-//     });
-//   }
-// }
-// function* callEditDetailsReq(action) {
-//   try {
-//     let apiResponse = yield call(editDetailsApi, action.id, action.data);
-//     let { data, status } = apiResponse;
-//     console.log('====================================');
-//     console.log({ editBanner: action.data });
-//     console.log('====================================');
-//     const message = 'banner updated successfully';
-//     yield put({
-//       type: actions.EDIT_DETAILS_SUC,
-//       statusCode: status,
-//       message,
-//     });
-//     const newDetailsList = yield call(getDetailsApi);
-//     yield put({
-//       type: actions.GET_DETAILS_SUC,
-//       Details: newDetailsList.data,
-//     });
-//     delay(1000);
-//     yield ShowMessage(status, message);
-//   } catch (err) {
-//     if (err && err?.response) {
-//       yield put({
-//         type: actions.EDIT_DETAILS_FAIL,
-//         payload: err.response.message,
-//       });
-//     }
-//     yield put({
-//       type: actions.EDIT_DETAILS_FAIL,
-//       payload: err.message,
-//     });
-//   }
-// }
+function* callDeleteDetailsReq(action) {
+  try {
+    let apiResponse = yield call(deleteDetailsApi, action.payload);
+    let {data, status } = apiResponse;
+    yield put({
+      type: actions.DLT_DETAILS_SUC,
+      id: action.payload, 
+    });
+    console.log('o')
+    
+    delay(1000);
+    toast.success('Movie deleted sucessfully');
+  } catch (err) {
+    if (err && err?.response) {
+      yield put({
+        type: actions.DLT_DETAILS_FAIL,
+        payload: err.response.message,
+      });
+    }
+    yield put({
+      type: actions.DLT_DETAILS_FAIL,
+      payload: err.message,
+    });
+  }
+}
+function* callEditDetailsReq(action) {
+  try {
+    let apiResponse = yield call(editDetailsApi, action.id, action.data);
+    let { data, status } = apiResponse;
+   
+  
+    
+    const message = 'movie updated successfully';
+    yield put({
+      type: actions.EDIT_DETAILS_SUC,
+      statusCode: status,
+      message,
+    });
+    const newDetailsList = yield call(getDetailsApi);
+    yield put({
+      type: actions.GET_DETAILS_SUC,
+      Details: newDetailsList.data,
+    });
+    delay(1000);
+    toast.success('Movie edited sucessfully');
+  } catch (err) {
+    if (err && err?.response) {
+      yield put({
+        type: actions.EDIT_DETAILS_FAIL,
+        payload: err.response.message,
+      });
+    }
+    yield put({
+      type: actions.EDIT_DETAILS_FAIL,
+      payload: err.message,
+    });
+  }
+}
 export function* sendDetails() {
   yield takeEvery(actions.SEND_DETAILS_REQ, callSendDetailsReq);
 }
@@ -280,15 +298,16 @@ export function* sendRating() {
 export function* getRecommend() {
   yield takeEvery(actions.GET_RECOMMEND_REQ,callGetRecommendReq)
 }
-// export function* getbannerDetails() {
-//   yield takeEvery(actions.GET_ADMINDETAILS_REQ, callGetBannerDetailsReq);
-// }
-// export function* deleteDetails() {
-//   yield takeEvery(actions.DLT_DETAILS_REQ, callDeleteDetailsReq);
-// }
-// export function* editDetails() {
-//   yield takeEvery(actions.EDIT_DETAILS_REQ, callEditDetailsReq);
-// }
+export function* getUserRecommend() {
+  yield takeEvery(actions.GET_USERRECOMMEND_REQ,callGetUserRecommendReq)
+}
+
+export function* deleteDetails() {
+  yield takeEvery(actions.DLT_DETAILS_REQ, callDeleteDetailsReq);
+}
+export function* editDetails() {
+  yield takeEvery(actions.EDIT_DETAILS_REQ, callEditDetailsReq);
+}
 
 export default function* detailsSaga() {
   return yield all([
@@ -298,8 +317,9 @@ export default function* detailsSaga() {
     fork(getRating),
     fork(sendRating),
     fork(getLanguage),
-    fork(getRecommend)
-    // fork(editDetails),
-    // fork(deleteDetails),
+    fork(getRecommend),
+    fork(getUserRecommend),
+    fork(editDetails),
+    fork(deleteDetails),
   ]);
 }

@@ -9,6 +9,8 @@ const initialState = {
   Language:[],
   Rating:[],
   Recommend:[],
+  UserRecommend:[],
+
   
 };
 
@@ -82,6 +84,23 @@ const DetailsReducer = (state = initialState, action) => {
             loading: false,
             message: action.payload,
           };
+          case actions.GET_USERRECOMMEND_REQ:
+            return {
+              ...state,
+              loading: true,
+            };
+          case actions.GET_USERRECOMMEND_SUC:
+            return {
+              ...state,
+              loading: false,
+              UserRecommend: action.details,
+            };
+          case actions.GET_USERRECOMMEND_FAIL:
+            return {
+              ...state,
+              loading: false,
+              message: action.payload,
+            };
         
         case actions.SEND_RATING_REQ:
           return {
@@ -145,8 +164,8 @@ const DetailsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        Details: state.Details.Details.filter(
-          (detail) => detail.id !== action.id,
+        Details: state.Details.filter(
+          (detail) => detail.movie_id !== action.id,
         ),
       };
     case actions.DLT_DETAILS_FAIL:

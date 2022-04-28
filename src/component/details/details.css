@@ -8,7 +8,17 @@
   padding-top: 20px;
   /* align-items: center; */
 }
-
+.user_recomended {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+}
+.more_movies {
+  width: 70%;
+}
+.space {
+  width: 30%;
+}
 .image_container {
   width: 30%;
 }

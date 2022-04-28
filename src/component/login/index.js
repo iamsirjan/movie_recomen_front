@@ -25,7 +25,7 @@ const Login = () => {
             setPasswordError('*This field is required')
         } else setPasswordError('')
       
-
+            
         dispatch(action.login(data));
      
 
@@ -44,7 +44,7 @@ const Login = () => {
                           <Typography sx={{mt:0.2,ml:1,width:'100%',fontSize:'10px',color:'red'}}> {usernameError} </Typography>
                 <TextField sx={{mt:4}}
                 fullWidth
-              
+              type="password"
               id="demo-helper-text-misaligned"
               label="Password"
               onChange={(e) =>setPassword(e.target.value)}

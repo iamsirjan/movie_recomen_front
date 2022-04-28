@@ -1,31 +1,53 @@
 import { TextField, Typography } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState,useEffect } from "react";
+import { useDispatch ,useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import actions from "./redux/actions";
 // import './login.css';
 const Register = () => {
+
+
     const dispatch = useDispatch()
     const [firstname,setFirstName] = useState()
     const [lastname,setLastName] = useState()
     const [email,setEmail] = useState()
     const [password,setPassword] = useState()
     const [repassword,setRePassword] = useState()
+    const [image,setImage] = useState();
 
     const [username,setUsername] = useState()
     const [firstnameError,setFirstnameError] = useState('')
     const [lastnameError,setLastnameError] = useState('')
     const [emailError,setemailError] = useState('')
+ const [emailTakenError,setEmailTakenError] = useState('')
+ const [usernameTaken,setUsernameTakenError] = useState('')
     const [usernameError,setUsernameError] = useState('')
     const [passwordError,setPasswordError] = useState('')
+    const [passwordRegrexError,setPasswordRegrexError] = useState('')
+
     const [repasswordError,setRePasswordError] = useState('')
 
+    const passwordRegrex =  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+    const userList = useSelector((state) => state.register.user)
+    const previewimage = (e) => {
+        setImage(e.target.files[0])
+    }
+  
 
+  useEffect(() => {
+    dispatch(actions.getdetails())
+  },[])
     const handleSubmit = (e) => {
             e.preventDefault()
              if (!firstname) {
                  setFirstnameError('*This field is required')
              } else setFirstnameError('')
+             if (userList?.some((data) => data.email== email)) {
+                 setEmailTakenError('* email is already taken')
+             }else setEmailTakenError('')
+            if (userList?.some((data) => data.username== username)) {
+                    setUsernameTakenError('* username is already taken')
+                }else setUsernameTakenError('')
              if(!lastname) {
                  setLastnameError('*This field is required')
              } else setLastnameError('')
@@ -33,14 +55,17 @@ const Register = () => {
                 setemailError('*This field is required') 
             } else setemailError('')
              if (!username) {
-            setUsernameError('*This field is required')
+            setUsernameError('*Username is already taken')
             } else setUsernameError('')
+            if (password.match(passwordRegrex)) {
+                setPasswordRegrexError('')
+            } else setPasswordRegrexError('*password must be eight characters including one uppercase letter, one special character and alphanumeric characters')
             if (!password) {
             setPasswordError('*This field is required')
 
             } else setPasswordError('')
-            if (!repassword) {
-                setRePasswordError('*This field is required')
+            if ( password != repassword) {
+                setRePasswordError('*password and confirm password doesnt match')
     
                 } else setRePasswordError('')
 
@@ -50,9 +75,24 @@ const Register = () => {
                 email,
                 password,
                 username,
-                re_password:repassword
+                re_password:repassword,
+                image,
+                
             }
-            dispatch(actions.adddetails(data))
+            console.log(data)
+            const formdata = new FormData();
+
+         formdata.append("firstname", firstname);
+         formdata.append("lastname",lastname)
+         formdata.append("email",email)
+        
+         formdata.append("password",password)
+         formdata.append("re_password",repassword)
+
+         formdata.append("username",username)
+         formdata.append("image",image)
+         
+            dispatch(actions.adddetails(formdata))
     }
 
     return (
@@ -87,6 +127,8 @@ const Register = () => {
 
                         />
                       <Typography sx={{mt:0.2,ml:1,width:'100%',fontSize:'10px',color:'red'}}> {emailError} </Typography>
+                      <Typography sx={{mt:0.2,ml:1,width:'100%',fontSize:'10px',color:'red'}}> {emailTakenError} </Typography>
+
 
                   <TextField  sx={{mt:1}}
                 fullWidth 
@@ -97,22 +139,39 @@ const Register = () => {
                         />
 
                       <Typography sx={{mt:0.2,ml:1,width:'100%',fontSize:'10px',color:'red'}}> {usernameError} </Typography>
+                      <Typography sx={{mt:0.2,ml:1,width:'100%',fontSize:'10px',color:'red'}}> {usernameTaken} </Typography>
+
 
                 <TextField sx={{mt:1}}
 
                 fullWidth
                 id="demo-helper-text-misaligned"
                 label="Password"
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}
 
                         />
                 
+                
                 <Typography sx={{mt:0.2,ml:1,width:'100%',fontSize:'10px',color:'red'}}> {passwordError} </Typography>
+                <Typography sx={{mt:0.2,ml:1,width:'100%',fontSize:'10px',color:'red'}}> {passwordRegrexError} </Typography>
+
+                <TextField sx={{mt:1}}
+type="file"
+fullWidth
+id="demo-helper-text-misaligned"
+
+onChange={(e) => previewimage(e)}
+helperText="preview image"
+
+/>
                 <TextField sx={{mt:1}}
 
 fullWidth
 id="demo-helper-text-misaligned"
 label=" Confirm Password"
+type="password"
+
 onChange={(e) => setRePassword(e.target.value)}
 
         />

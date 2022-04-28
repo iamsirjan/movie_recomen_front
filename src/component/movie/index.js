@@ -44,9 +44,9 @@ const Movie = () => {
           <div className="movie_list">
     
            
-            {movieList.map((data,i) => (
+            {movieList?.slice(0,4).map((data,i) => (
              
-         <Link className="link" to={`/movie-details/${data.movie_id}`}>
+         <Link className="link" to={`/movie-details/${data.name}/${data.movie_id}`}>
             <div key={i}  className="movie_box">
                 <div className="movie_image">
                     <img src={data.image} alt="movie_image" />
@@ -79,14 +79,18 @@ const Movie = () => {
 
 
         <div className="movie_container_box">
+        {movieList?.filter((data)  => data.language == 1) &&
            <span>English</span>
+           
+
+        }
           <div className="movie_list">
     
            
-            {movieList.filter((data)  => data.language == 1).map((data,i) => (
+            {movieList?.filter((data)  => data.language == 1).map((data,i) => (
             
             data.language == 1 ?
-            <Link className="link" to={`/movie-details/${data.movie_id}`}>
+            <Link className="link" to={`/movie-details/${data.name}/${data.movie_id}`}>
             <div key={i}  className="movie_box">
                 <div className="movie_image">
                     <img src={data.image} alt="movie_image" />
@@ -119,15 +123,17 @@ const Movie = () => {
         
             </div> 
         </div>
+     
+
         <div className="movie_container_box">
-           <span>Hindi</span>
+             <span>Hindi</span>
           <div className="movie_list">
     
            
-            {movieList.filter((data)  => data.language == 4).map((data,i) => (
+            {movieList?.filter((data)  => data.language == 3).map((data,i) => (
             
-            data.language == 4 ?
-            <Link className="link" to={`/movie-details/${data.movie_id}`}>
+            data.language == 3 ?
+            <Link className="link" to={`/movie-details/${data.name}/${data.movie_id}`}>
             <div key={i}  className="movie_box">
                 <div className="movie_image">
                     <img src={data.image} alt="movie_image" />
@@ -148,9 +154,9 @@ const Movie = () => {
                 </div>
             </div>
             </Link>
-            :
-            <h1>movie comming soon</h1>
            
+           :
+           null
            
              ))}
            
@@ -161,15 +167,16 @@ const Movie = () => {
             </div> 
         </div>
 
+                    
         <div className="movie_container_box">
            <span>Nepali</span>
           <div className="movie_list">
     
            
-            {movieList.filter((data)  => data.language == 5).map((data,i) => (
+            {movieList?.filter((data)  => data.language == 2).map((data,i) => (
             
-            data.language == 5 ?
-            <Link className="link" to={`/movie-details/${data.movie_id}`}>
+            data.language == 2 &&
+            <Link className="link" to={`/movie-details/${data.name}/${data.movie_id}`}>
             <div key={i}  className="movie_box">
                 <div className="movie_image">
                     <img src={data.image} alt="movie_image" />
@@ -190,8 +197,7 @@ const Movie = () => {
                 </div>
             </div>
             </Link>
-            :
-            <h1>movie comming soon</h1>
+      
            
            
              ))}
@@ -202,16 +208,17 @@ const Movie = () => {
         
             </div> 
         </div>
+     
 
         <div className="movie_container_box">
            <span>Recommend For you</span>
           <div className="movie_list">
     
            
-            {movieList.filter((data)=> RecommendList.includes(data.movie_id)).map((data,i) => (
+            {movieList?.filter((data)=> RecommendList.includes(data.movie_id)).map((data,i) => (
             
            
-            <Link className="link" to={`/movie-details/${data.movie_id}`}>
+            <Link className="link" to={`/movie-details/${data.name}/${data.movie_id}`}>
             <div key={i}  className="movie_box">
                 <div className="movie_image">
                     <img src={data.image} alt="movie_image" />

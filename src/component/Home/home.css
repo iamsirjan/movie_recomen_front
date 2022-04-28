@@ -17,3 +17,19 @@
 .movie_container {
   flex: 0.975;
 }
+
+.search_bar {
+  display: flex;
+  margin: 10px;
+  flex: 1;
+}
+.search_bar input {
+  width: 100%;
+  padding: 8px;
+
+  outline: none;
+  border: 1px solid #e5e5e5;
+}
+.movie_search_box {
+  display: flex;
+}
